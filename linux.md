@@ -1,5 +1,6 @@
 # 1、关于linux 文件备份的一些思考 
-    近几年在linux上工作,每次切换系统或更换硬件机器都要重新搭建一次环境，尤其是各种开发相关的环境.真的好累，我就索性在研究如何在不同的机器上备份和迁移系统。
+    近几年在linux上工作,每次切换系统或更换硬件机器都要重新搭建一次环境，尤其是各种开发相关的环境.真的好累，
+    我就索性在研究如何在不同的机器上备份和迁移系统。
 ## 1、最早我也是将整个系统上的所有文件全部用tar 压缩，然后在目标机器上把所有文件解压 实现整个系统的备份.
     下面是操作步骤:
 ### 在待备份的系统上压缩所需要文件
@@ -19,7 +20,7 @@
 
 ## 2、而我的需要求仅是备份自己安装的常见应用(如IDEA，Android Studio 等IDE，firefox、chrome等应用)和开发工具(如jdk,python等)
 ### 1、备份
-      我的所有应用包括系统应用 都安装在 /usr/share下,桌面快捷方式 在/usr/share/applications下，因此我只要把 /usr/share 整个文件压缩还原到目标机器上主不行了。
+      我的所有应用包括系统应用 都安装在 /usr/share下,桌面快捷方式 在/usr/share/applications下，因此我只要把 /usr/share 整个文件压缩还原到目标机器上就不行了。
       cd /
       tar -pzcvf usr_share_snap.tar.gz usr/share
       我装开发环境通常安装在 /usr/lib下，以jdk为例，我把jdk 下载后解压到 /usr/lib 目录下 然后配置环境变量。因此这个文件也有必要迁移
@@ -31,6 +32,10 @@
       tar -pzxvf usr_share_snap.tar.gz -C /
       tar -pzxvf usr_lib_snap.tar.gz   -C /
       tar -pzxvf root_snap.tar.gz      -C /
+      
+      使用配置的环境变量生效,在 root 权限下执行
+      source ~/*
+      报错不要理会
       
       完成以上步骤后，重启目标系统 reboot,所有应用和部分开发环境都能使用. 试下 java -version 就知道java环境已经配置好了.
       为什么说是部分呢，因为有些用apt install gcc 安装的 gcc编译器 是装在 /usr/bin 下面的，如果想让gcc也迁称到新机上，需要用
