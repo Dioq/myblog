@@ -20,7 +20,7 @@
 
 ## 2、而我的需要求仅是备份自己安装的常见应用(如IDEA，Android Studio 等IDE，firefox、chrome等应用)和开发工具(如jdk,python等)
 ### 1、备份
-      我的所有应用包括系统应用 都安装在 /usr/share下,桌面快捷方式 在/usr/share/applications下，因此我只要把 /usr/share 整个文件压缩还原到目标机器上就不行了。
+      我的所有应用包括系统应用 都安装在 /usr/share下,桌面快捷方式 在/usr/share/applications下，因此我只要把 /usr/share 整个文件压缩还原到目标机器上就行了。
       cd /
       tar -pzcvf usr_share_snap.tar.gz usr/share
       我装开发环境通常安装在 /usr/lib下，以jdk为例，我把jdk 下载后解压到 /usr/lib 目录下 然后配置环境变量。因此这个文件也有必要迁移
@@ -33,14 +33,11 @@
       tar -pzxvf usr_lib_snap.tar.gz   -C /
       tar -pzxvf root_snap.tar.gz      -C /
       
-      使用配置的环境变量生效,在 root 权限下执行
-      source ~/*
-      报错不要理会
-      
       完成以上步骤后，重启目标系统 reboot,所有应用和部分开发环境都能使用. 试下 java -version 就知道java环境已经配置好了.
       为什么说是部分呢，因为有些用apt install gcc 安装的 gcc编译器 是装在 /usr/bin 下面的，如果想让gcc也迁称到新机上，需要用
       同样的方法压缩和解压 /usr/bin 目录。 但我感觉没必要,一来安装gcc 很简单就一条命令，二来 /usr/bin 下是系统预装的可执行程序，
       会随着系统升级而改变,我不想通过简单的复制原系统来更改这里的文件.
       
 ### 到这里可能有人要问为什么 不把 /usr 下的所有文件全压缩并解压覆盖目标机器的 /usr文件呢？
-    其实
+    其实也能行，我试过完全可以，但是这种方式可能对系统的改变有些大，尽管目前我还没发现有什么重大影响，但我还是倾向这种精细化备份迁移的方式，需要什么就迁移什么。
+    你也可以用这种方式迁移 linux 下的其他数据，linux是基于文件的操作系统，只要你把所有文件包括文件的依赖关系迁过去，这些文件所执行的功能就能要新机上运行。
