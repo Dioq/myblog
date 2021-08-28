@@ -23,14 +23,14 @@
       我的所有应用包括系统应用 都安装在 /usr/share下,桌面快捷方式 在/usr/share/applications下，因此我只要把 /usr/share 整个文件压缩还原到目标机器上就行了。
       cd /
       tar -pzcvf usr_share_snap.tar.gz usr/share
-      我装开发环境通常安装在 /usr/lib下，以jdk为例，我把jdk 下载后解压到 /usr/lib 目录下 然后配置环境变量。因此这个文件也有必要迁移
-      tar -pzcvf usr_lib_snap.tar.gz usr/lib
+      我装开发环境通常安装在 /usr/local/lib下，以jdk为例，我把jdk 下载后解压到 /usr/local/lib 目录下 然后配置环境变量。因此这个文件也有必要迁移
+      tar -pzcvf usr_local_lib_snap.tar.gz usr/local/lib
       环境变量像jdk 都是在 /root 下的 .bashra 文件里，因此这个文件都需要备份迁移
       tar -pzcvf root_snap.tar.gz root
 ### 2、还原
       把上一步解压的文件解压复制到目标机器上,然后解压
       tar -pzxvf usr_share_snap.tar.gz -C /
-      tar -pzxvf usr_lib_snap.tar.gz   -C /
+      tar -pzxvf usr_local_lib_snap.tar.gz   -C /
       tar -pzxvf root_snap.tar.gz      -C /
       
       完成以上步骤后，重启目标系统 reboot,所有应用和部分开发环境都能使用. 试下 java -version 就知道java环境已经配置好了.
