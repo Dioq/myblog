@@ -1,0 +1,77 @@
+Linux
+
+重启命令：
+1、reboot
+2、shutdown -r now 立刻重启(root用户使用)
+3、shutdown -r 10 过10分钟自动重启(root用户使用)
+4、shutdown -r 20:35 在时间为20:35时候重启(root用户使用)
+如果是通过shutdown命令设置重启的话，可以用shutdown -c命令取消重启
+
+关机命令：
+1、halt   立刻关机
+2、poweroff  立刻关机
+3、shutdown -h now 立刻关机(root用户使用)
+4、shutdown -h 10 10分钟后自动关机
+如果是通过shutdown命令设置关机的话，可以用shutdown -c命令取消重启
+
+
+后台运行
+./xxx &
+
+//退出Xshell的时候继续运行进程，则需要使用nohup忽略hangup信号
+nohup ./test.sh &
+
+查看进程信息
+ps -A 		// 显示进程信息
+ps -u root 	// 显示root进程用户信息
+ps -ef 		// 显示所有命令，连带命令行
+ps -ef | grep "name"
+ps -x       // 查看属于自己的进程
+
+
+Linux 防火墙常用命令
+1.查看防火墙状态：
+firewall-cmd --state 
+2.启动防火墙
+systemctl start firewalld
+3.关闭防火墙
+systemctl stop firewalld
+4.检查防火墙开放的端口
+firewall-cmd --permanent --zone=public --list-ports
+5.开放一个新的端口
+firewall-cmd --zone=public --add-port=8080/tcp --permanent
+6.重启防火墙
+firewall-cmd --reload
+7.验证新增加端口是否生效
+firewall-cmd --zone=public --query-port=8080/tcp
+8.防火墙开机自启动
+systemctl enable firewalld.service
+9.防火墙取消某一开放端口
+firewall-cmd --zone=public --remove-port=9200/tcp --permanent
+(注:开放端口或取消端口后,重要重启防火墙)
+
+Ubuntu查看端口使用情况，使用netstat命令：
+查看已经连接的服务端口（ESTABLISHED）
+netstat -a
+查看所有的服务端口（LISTEN，ESTABLISHED）
+netstat -ap
+查看指定端口，可以结合grep命令：
+netstat -ap | grep 8080
+也可以使用lsof命令：
+lsof -i:8080
+还有一个比较好用的命令，查看**端口：
+netstat -lnp | grep 8080
+若要关闭使用这个端口的程序，使用kill + 对应的pid
+kill -9 PID号
+
+
+wget下载(wget后跟下载链接)
+wget https://1.na.dl.wireshark.org/win64/Wireshark-win64-3.2.4.exe
+
+
+# 扫描开放的port
+nmap  www.anant.club
+# 监测外部ip地址的流量
+iftop
+# 追踪所访问的网站经过多少设备
+traceroute -n www.anant.club
